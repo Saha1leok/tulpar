@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Админ-панель — СтройМарт TULPAR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{--blue:#0b4eb4;--blue-dark:#083b88;--orange:#ff7a00;--ink:#101828;--muted:#667085;--line:#dfe6ee;--soft:#f6f8fb;--white:#fff;--red:#b42318;--green:#087443}
+    *{box-sizing:border-box}html{color-scheme:light}body{margin:0;background:var(--soft);color:var(--ink);font:15px/1.5 Inter,Arial,sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}:focus-visible{outline:3px solid rgba(11,78,180,.25);outline-offset:2px}.hidden{display:none!important}
+    .login{min-height:100vh;display:grid;place-items:center;padding:24px}.loginCard{width:min(440px,100%);padding:34px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 22px 60px rgba(15,38,72,.12)}.loginBrand{display:flex;align-items:center;gap:12px;margin-bottom:28px}.mark{width:48px;height:48px;border-radius:14px;background:var(--blue);display:grid;place-items:center;color:var(--orange);font:800 29px Manrope}.login h1{margin:0;font:800 24px Manrope}.login p{color:var(--muted)}
+    .field{display:grid;gap:7px;margin-bottom:16px;font-weight:700}.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;padding:11px 12px;color:var(--ink);font-weight:400}.field textarea{min-height:92px;resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--blue);outline:3px solid rgba(11,78,180,.09)}.hint{font-size:12px;color:var(--muted);font-weight:400}.error{min-height:22px;color:var(--red);font-size:13px}.primary,.secondary,.danger{min-height:44px;border-radius:10px;padding:0 16px;font-weight:800}.primary{border:0;background:var(--blue);color:#fff}.primary:hover{background:var(--blue-dark)}.secondary{border:1px solid var(--line);background:#fff;color:var(--ink)}.secondary:hover{border-color:#9bb5d9;color:var(--blue)}.danger{border:1px solid #f3b7b2;background:#fff;color:var(--red)}
+    .app{min-height:100vh}.top{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}.topInner{width:min(1440px,calc(100% - 36px));height:74px;margin:auto;display:flex;align-items:center;gap:18px}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--blue);font:800 18px Manrope}.brand .mark{width:42px;height:42px;font-size:25px}.topTitle{padding-left:18px;border-left:1px solid var(--line);font-weight:700}.topActions{margin-left:auto;display:flex;gap:8px}
+    .workspace{width:min(1440px,calc(100% - 36px));margin:24px auto;display:grid;grid-template-columns:minmax(440px,1.15fr) minmax(390px,.85fr);gap:20px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}.panelHead{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}.panelHead h1,.panelHead h2{margin:0;font:800 21px Manrope}.panelHead p{margin:3px 0 0;color:var(--muted);font-size:13px}.add{margin-left:auto}.searchBox{padding:16px 20px;border-bottom:1px solid var(--line)}.searchBox input{width:100%;height:44px;padding:0 13px;border:1px solid var(--line);border-radius:10px}.stats{padding:0 20px 14px;color:var(--muted);font-size:13px}.list{height:calc(100vh - 245px);min-height:430px;overflow:auto}.row{width:100%;border:0;border-bottom:1px solid #edf1f5;background:#fff;padding:13px 20px;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:16px}.row:hover,.row.active{background:#f1f6ff}.row.active{box-shadow:inset 3px 0 var(--blue)}.rowName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}.rowMeta{color:var(--muted);font-size:12px}.rowPrice{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}.empty{padding:55px 24px;text-align:center;color:var(--muted)}
+    .editor{position:sticky;top:98px}.editorBody{padding:22px}.editorEmpty{padding:90px 28px;text-align:center;color:var(--muted)}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.span2{grid-column:1/-1}.editorActions{display:flex;gap:9px;padding-top:8px}.editorActions .danger{margin-left:auto}.notice{margin:0 0 18px;padding:11px 13px;border-radius:10px;background:#edf8f2;color:var(--green);font-size:13px}.notice[hidden]{display:none}.saveState{margin-right:auto;color:var(--muted);font-size:13px}.mobileBack{display:none}
+    @media(max-width:900px){.workspace{grid-template-columns:1fr}.editor{position:static}.list{height:52vh}.topTitle{display:none}.workspace.editing .catalogPanel{display:none}.workspace:not(.editing) .editor{display:none}.workspace.editing .mobileBack{display:inline-flex}.formGrid{grid-template-columns:1fr}.span2{grid-column:auto}.topActions .exportText{display:none}}
+    @media(max-width:540px){.topInner,.workspace{width:min(100% - 20px,1440px)}.topInner{height:66px}.topActions{gap:5px}.topActions button,.topActions a{padding-inline:11px}.workspace{margin-top:12px}.panelHead{padding:16px}.row{padding-inline:16px;grid-template-columns:minmax(0,1fr) 95px}.editorBody{padding:16px}}
+  </style>
+</head>
+<body>
+  <section class="login" id="loginView">
+    <form class="loginCard" id="loginForm">
+      <div class="loginBrand"><span class="mark">T</span><div><h1>Админ-панель</h1><span>СтройМарт TULPAR</span></div></div>
+      <p id="loginIntro">Введите пароль администратора.</p>
+      <label class="field">Пароль<input id="password" type="password" minlength="6" autocomplete="current-password" required><span class="hint" id="passwordHint"></span></label>
+      <label class="field hidden" id="confirmField">Повторите пароль<input id="passwordConfirm" type="password" minlength="6" autocomplete="new-password"></label>
+      <div class="error" id="loginError" role="alert"></div>
+      <button class="primary" type="submit" style="width:100%" id="loginButton">Войти</button>
+    </form>
+  </section>
+
+  <div class="app hidden" id="appView">
+    <header class="top"><div class="topInner">
+      <a class="brand" href="index.html"><span class="mark">T</span><span>СтройМарт</span></a><span class="topTitle">Управление товарами</span>
+      <div class="topActions"><button class="secondary" id="exportBtn" type="button"><span class="exportText">Экспорт </span>JSON</button><a class="secondary" href="index.html" style="display:inline-flex;align-items:center;text-decoration:none">На сайт</a><button class="secondary" id="logoutBtn" type="button">Выйти</button></div>
+    </div></header>
+    <main class="workspace" id="workspace">
+      <section class="panel catalogPanel">
+        <div class="panelHead"><div><h1>Товары</h1><p>Выберите товар для редактирования</p></div><button class="primary add" id="addBtn" type="button">+ Добавить</button></div>
+        <div class="searchBox"><input id="adminSearch" type="search" placeholder="Название, артикул или категория" aria-label="Поиск товаров"></div>
+        <div class="stats" id="stats">Загрузка каталога…</div><div class="list" id="productList"></div>
+      </section>
+      <section class="panel editor">
+        <div class="editorEmpty" id="editorEmpty"><strong>Выберите товар</strong><p>Здесь можно изменить название, цену, категорию, изображение и описание.</p></div>
+        <form id="editorForm" class="hidden">
+          <div class="panelHead"><button class="secondary mobileBack" id="mobileBack" type="button">←</button><div><h2 id="editorTitle">Редактирование</h2><p id="editorId"></p></div></div>
+          <div class="editorBody"><p class="notice" id="savedNotice" hidden>Изменения сохранены в этом браузере.</p>
+            <div class="formGrid">
+              <label class="field span2">Название<input id="fieldName" required></label>
+              <label class="field">Цена, ₸<input id="fieldPrice" type="number" min="0" step="1" required></label>
+              <label class="field">Артикул<input id="fieldSku" required></label>
+              <label class="field">Категория<input id="fieldCategory" required></label>
+              <label class="field">Бренд<input id="fieldBrand"></label>
+              <label class="field span2">Ссылка на изображение<input id="fieldImage" placeholder="ormis-images/товар.webp или https://..."></label>
+              <label class="field span2">Описание<textarea id="fieldDescription" placeholder="Описание товара"></textarea></label>
+            </div>
+            <div class="editorActions"><span class="saveState" id="saveState"></span><button class="primary" type="submit">Сохранить</button><button class="danger" id="deleteBtn" type="button">Удалить</button></div>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script>
+    let sourceData=null,currentChanges={patches:{},deleted:[],added:[]},allProducts=[],filteredProducts=[],selectedId=null,isAdding=false,renderLimit=120;
+    const $=selector=>document.querySelector(selector),esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const formatPrice=value=>new Intl.NumberFormat('ru-RU').format(Number(value)||0)+' ₸';
+    function getChanges(){return currentChanges}
+    async function setChanges(changes){const response=await fetch('/api/catalog-changes',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(changes)}),result=await response.json().catch(()=>({}));if(!response.ok)throw new Error(result.error||'Не удалось сохранить изменения.');currentChanges={...changes,updatedAt:result.updatedAt}}
+    function configureLogin(){$('#loginIntro').textContent='Введите пароль администратора, заданный в Netlify.';$('#confirmField').classList.add('hidden');$('#passwordConfirm').required=false;$('#passwordHint').textContent='Пароль хранится в защищённых настройках Netlify.';$('#loginButton').textContent='Войти'}
+    $('#loginForm').onsubmit=async event=>{event.preventDefault();$('#loginError').textContent='';$('#loginButton').disabled=true;try{const response=await fetch('/api/admin-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:$('#password').value})}),result=await response.json();if(!response.ok)throw new Error(result.error||'Не удалось войти.');await showApp()}catch(error){$('#loginError').textContent=error.message}finally{$('#loginButton').disabled=false}};
+    async function showApp(){$('#loginView').classList.add('hidden');$('#appView').classList.remove('hidden');if(!sourceData)await loadCatalog()}
+    async function loadCatalog(){try{const [catalogResponse,changesResponse]=await Promise.all([fetch('products.json'),fetch('/api/catalog-changes',{cache:'no-store'})]);if(!catalogResponse.ok||!changesResponse.ok)throw new Error();sourceData=await catalogResponse.json();currentChanges={patches:{},deleted:[],added:[],...await changesResponse.json()};rebuildProducts();applySearch()}catch{$('#stats').textContent='Не удалось загрузить каталог';$('#productList').innerHTML='<div class="empty">Проверьте новый Deploy и работу Netlify Functions.</div>'}}
+    function rebuildProducts(){const changes=getChanges(),deleted=new Set((changes.deleted||[]).map(String));allProducts=sourceData.products.filter(item=>!deleted.has(String(item.id))).map(item=>({...item,...(changes.patches[String(item.id)]||{})})).concat(changes.added||[])}
+    function applySearch(){const query=$('#adminSearch').value.trim().toLocaleLowerCase('ru-RU');filteredProducts=query?allProducts.filter(item=>`${item.name||''} ${item.sku||''} ${item.category||''} ${item.brand||''}`.toLocaleLowerCase('ru-RU').includes(query)):allProducts;renderLimit=120;renderList()}
+    function renderList(){const visible=filteredProducts.slice(0,renderLimit);$('#stats').textContent=`Найдено ${new Intl.NumberFormat('ru-RU').format(filteredProducts.length)} · изменено ${Object.keys(getChanges().patches).length} · добавлено ${getChanges().added.length}`;$('#productList').innerHTML=visible.length?visible.map(item=>`<button class="row${String(item.id)===String(selectedId)?' active':''}" type="button" data-id="${esc(item.id)}"><span><span class="rowName">${esc(item.name||'Без названия')}</span><span class="rowMeta">Арт. ${esc(item.sku||item.id)} · ${esc(item.category||'Без категории')}</span></span><span class="rowPrice">${formatPrice(item.price)}</span></button>`).join(''):'<div class="empty">Товары не найдены.</div>';$('#productList').querySelectorAll('.row').forEach(row=>row.onclick=()=>selectProduct(row.dataset.id));if(visible.length<filteredProducts.length){const more=document.createElement('button');more.className='row';more.type='button';more.innerHTML=`<span class="rowName">Показать ещё</span><span class="rowPrice">${Math.min(120,filteredProducts.length-visible.length)}</span>`;more.onclick=()=>{renderLimit+=120;renderList()};$('#productList').append(more)}}
+    function selectProduct(id){const product=allProducts.find(item=>String(item.id)===String(id));if(!product)return;selectedId=String(id);isAdding=false;fillForm(product);renderList();$('#workspace').classList.add('editing')}
+    function fillForm(product){$('#editorEmpty').classList.add('hidden');$('#editorForm').classList.remove('hidden');$('#editorTitle').textContent=isAdding?'Новый товар':'Редактирование товара';$('#editorId').textContent=isAdding?'Заполните данные':`ID: ${product.id}`;$('#fieldName').value=product.name||'';$('#fieldPrice').value=Number(product.price)||0;$('#fieldSku').value=product.sku||'';$('#fieldCategory').value=product.category||'';$('#fieldBrand').value=product.brand||'';$('#fieldImage').value=product.image||'';$('#fieldDescription').value=product.description||'';$('#deleteBtn').classList.toggle('hidden',isAdding);$('#savedNotice').hidden=true;setTimeout(()=>$('#fieldName').focus(),0)}
+    $('#addBtn').onclick=()=>{isAdding=true;selectedId=null;fillForm({price:0});renderList();$('#workspace').classList.add('editing')};
+    $('#editorForm').onsubmit=async event=>{event.preventDefault();const category=$('#fieldCategory').value.trim(),values={name:$('#fieldName').value.trim(),price:Number($('#fieldPrice').value),sku:$('#fieldSku').value.trim(),category,adminCategory:category,brand:$('#fieldBrand').value.trim(),image:$('#fieldImage').value.trim(),description:$('#fieldDescription').value.trim()},changes=structuredClone(getChanges());$('#saveState').textContent='Сохраняем…';try{if(isAdding){const product={id:`custom-${Date.now()}`,...values,subcategory:values.category};changes.added.push(product);selectedId=String(product.id)}else changes.patches[selectedId]={...(changes.patches[selectedId]||{}),...values};await setChanges(changes);isAdding=false;rebuildProducts();applySearch();selectProduct(selectedId);$('#savedNotice').hidden=false;$('#savedNotice').textContent='Изменения опубликованы и уже доступны посетителям.';$('#saveState').textContent='Сохранено';setTimeout(()=>$('#saveState').textContent='',1800)}catch(error){$('#saveState').textContent=error.message}};
+    $('#deleteBtn').onclick=async()=>{const product=allProducts.find(item=>String(item.id)===String(selectedId));if(!product||!confirm(`Удалить товар «${product.name}»?`))return;const changes=structuredClone(getChanges()),addedIndex=changes.added.findIndex(item=>String(item.id)===String(selectedId));if(addedIndex>=0)changes.added.splice(addedIndex,1);else{changes.deleted=[...new Set([...changes.deleted,String(selectedId)])];delete changes.patches[selectedId]}try{await setChanges(changes);selectedId=null;rebuildProducts();applySearch();$('#editorForm').classList.add('hidden');$('#editorEmpty').classList.remove('hidden');$('#workspace').classList.remove('editing')}catch(error){alert(error.message)}};
+    $('#adminSearch').oninput=applySearch;$('#mobileBack').onclick=()=>$('#workspace').classList.remove('editing');
+    $('#exportBtn').onclick=()=>{const changes=getChanges(),deleted=new Set(changes.deleted.map(String)),products=sourceData.products.filter(item=>!deleted.has(String(item.id))).map(item=>({...item,...(changes.patches[String(item.id)]||{})})).concat(changes.added),blob=new Blob([JSON.stringify({...sourceData,count:products.length,products},null,2)],{type:'application/json'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='products-updated.json';link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000)};
+    $('#logoutBtn').onclick=async()=>{await fetch('/api/admin-logout',{method:'POST'});location.reload()};
+    configureLogin();fetch('/api/admin-login',{cache:'no-store'}).then(response=>response.ok?response.json():{authenticated:false}).then(result=>{if(result.authenticated)showApp()}).catch(()=>{});
+  </script>
+</body>
+</html>
